@@ -1,0 +1,17 @@
+.auth {
+  &-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-title {
+    color: #fff;
+    font-weight: 800;
+  }
+
+  &-form {
+    width: 100%;
+    max-width: 768px;
+  }
+}
