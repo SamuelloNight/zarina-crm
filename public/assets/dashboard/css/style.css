@@ -20728,7 +20728,7 @@ dl li {
 
 .list-ticked li:before {
   content: '\F12D';
-  color: #ff4747;
+  color: #71c016;
 }
 
 .list-arrow li:before {

@@ -2,13 +2,13 @@
   <span class="text-primary text-uppercase small font-weight-bold d-block pl-3">{{ __('Menu') }}</span>
   <ul class="nav">
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="{{ route('customer.dashboard.order') }}">
         <i class="mdi mdi-new-box menu-icon"></i>
         <span class="menu-title">{{ __('Create an Order') }}</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="{{ route('customer.dashboard.orders') }}">
         <i class="mdi mdi-circle-outline menu-icon"></i>
         <span class="menu-title">{{ __('My Orders') }}</span>
       </a>

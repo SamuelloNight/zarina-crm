@@ -28,27 +28,35 @@
     </div>
     <div class="col-12 grid-margin">
       <div class="row">
-        @foreach($reviews as $review)
-          <div class="col-12 col-md-3 mb-3">
-            <div class="card">
-              <div class="card-body">
-                <h4 class="card-title mb-3">{{ $review->customer->full_name }}</h4>
-                <p class="card-description mb-3">
-                  {{ $review->message }}
-                </p>
-                <address class="d-flex mb-0 text-warning">
-                  @for($gradeMax = 1; $gradeMax <= 5; $gradeMax++)
-                    @if($gradeMax <= $review->grade)
-                      <i class="mdi mdi-star"></i>
-                    @else
-                      <i class="mdi mdi-star-outline"></i>
-                    @endif
-                  @endfor
-                </address>
+        @if(empty($reviews->toArray()))
+          <div class="col-12">
+            <p class="text-muted">
+              <i>{{ __('No reviews') }}</i>
+            </p>
+          </div>
+        @else
+          @foreach($reviews as $review)
+            <div class="col-12 col-md-3 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title mb-3">{{ $review->customer->full_name }}</h4>
+                  <p class="card-description mb-3">
+                    {{ $review->message }}
+                  </p>
+                  <address class="d-flex mb-0 text-warning">
+                    @for($gradeMax = 1; $gradeMax <= 5; $gradeMax++)
+                      @if($gradeMax <= $review->grade)
+                        <i class="mdi mdi-star"></i>
+                      @else
+                        <i class="mdi mdi-star-outline"></i>
+                      @endif
+                    @endfor
+                  </address>
+                </div>
               </div>
             </div>
-          </div>
-        @endforeach
+          @endforeach
+        @endif
       </div>
     </div>
   </div>

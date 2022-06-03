@@ -52,7 +52,7 @@ class AuthenticateController extends Controller
 
     auth('customer')->login($customer);
 
-    return redirect()->route('customer.dashboard.main');
+    return redirect()->route('customer.dashboard.profile');
   }
 
   public function login(Request $request)
@@ -81,7 +81,7 @@ class AuthenticateController extends Controller
 
     auth('customer')->login($customer);
 
-    return redirect()->route('customer.dashboard.main');
+    return redirect()->route('customer.dashboard.profile');
   }
 
   public function logout()

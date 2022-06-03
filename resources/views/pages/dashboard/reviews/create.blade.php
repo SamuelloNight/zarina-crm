@@ -37,7 +37,7 @@
           <form class="forms-sample row" method="post" action="{{ route('customer.dashboard.review') }}">
             {{ csrf_field() }}
             <div class="form-group col-12">
-              <label>Message</label>
+              <label>{{ __('Message') }}</label>
               <textarea
                 class="form-control"
                 rows="4"

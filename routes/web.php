@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Web\AuthenticateController;
 use App\Http\Controllers\Web\Customer\MainController;
+use App\Http\Controllers\Web\Customer\OrdersController;
 use App\Http\Controllers\Web\Customer\ProfileController;
 use App\Http\Controllers\Web\Customer\ReviewsController;
 use App\Http\Controllers\Web\Customer\SettingsController;
@@ -9,8 +10,14 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\System\LanguageController;
 use Illuminate\Support\Facades\Route;
 
+/**
+ * Home page
+ */
 Route::get('/', [HomeController::class, 'show'])->name('home');
 
+/**
+ * Routes for authorization
+ */
 Route::prefix('auth')->group(function () {
   Route::prefix('register')->group(function () {
     Route::get('/', [AuthenticateController::class, 'show'])->name('customer.register');
@@ -25,8 +32,22 @@ Route::prefix('auth')->group(function () {
   Route::get('logout', [AuthenticateController::class, 'logout'])->name('customer.logout');
 });
 
+/**
+ * Routes for customer dashboard
+ */
 Route::prefix('dashboard')->middleware(['customer'])->group(function () {
   Route::get('main', [MainController::class, 'show'])->name('customer.dashboard.main');
+
+  Route::prefix('orders')->group(function () {
+    Route::get('list', [OrdersController::class, 'show'])->name('customer.dashboard.orders');
+    Route::get('more/{id}', [OrdersController::class, 'more'])->name('customer.dashboard.orders.more');
+    Route::get('delete/{id}', [OrdersController::class, 'delete'])->name('customer.dashboard.orders.delete');
+
+    Route::prefix('create')->group(function () {
+      Route::get('/', [OrdersController::class, 'show'])->name('customer.dashboard.order');
+      Route::post('/', [OrdersController::class, 'create']);
+    });
+  });
 
   Route::prefix('profile')->group(function () {
     Route::get('/', [ProfileController::class, 'show'])->name('customer.dashboard.profile');
@@ -49,6 +70,9 @@ Route::prefix('dashboard')->middleware(['customer'])->group(function () {
   });
 });
 
+/**
+ * Common routes
+ */
 Route::prefix('sys')->group(function () {
   Route::get('change-language', [LanguageController::class, 'change'])->name('sys.changeLanguage');
 });

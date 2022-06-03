@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -42,5 +43,10 @@ class Customer extends Authenticatable
   public function review(): HasOne
   {
     return $this->hasOne(Review::class, 'customer_id', 'id');
+  }
+
+  public function orders(): HasMany
+  {
+    return $this->hasMany(Order::class, 'customer_id', 'id');
   }
 }

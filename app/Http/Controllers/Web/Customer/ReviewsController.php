@@ -48,7 +48,7 @@ class ReviewsController extends Controller
     }
 
     $validated = $validator->validated();
-    $validated['customer_id'] = auth('customer')->user()->id;
+    $validated['customer_id'] = auth('customer')->id();
     $validated['published'] = false;
 
     Review::create($validated);

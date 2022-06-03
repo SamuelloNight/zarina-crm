@@ -65,7 +65,7 @@
             <p class="mb-3">
               {{ $customer->review->message }}
             </p>
-            <address class="d-flex mb-0 text-warning">
+            <address class="d-flex align-items-center mb-0 text-warning">
               @for($gradeMax = 1; $gradeMax <= 5; $gradeMax++)
                 @if($gradeMax <= $customer->review->grade)
                   <i class="mdi mdi-star"></i>
@@ -73,6 +73,7 @@
                   <i class="mdi mdi-star-outline"></i>
                 @endif
               @endfor
+              <span class="text-muted text-small ml-1">{{ $customer->review->created_at }}</span>
             </address>
           @else
             <p class="card-description my-4 text-center">
@@ -95,11 +96,29 @@
             {{ __('Here you can see the history of your orders and contacts with us') }}
           </p>
           <div class="row">
-            <div class="col-12">
-              <p class="card-description my-4 text-center">
-                <i>{{ __('The history of orders and requests is empty') }}</i>
-              </p>
-            </div>
+            @if(empty($customer->orders))
+              <div class="col-12">
+                <p class="card-description my-4 text-center">
+                  <i>{{ __('The history of orders and requests is empty') }}</i>
+                </p>
+              </div>
+            @else
+              @foreach($customer->orders as $order)
+                <div class="col-12 col-md-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <span class="font-weight-bold text-small d-block mb-2">{{ __($order->company) }}</span>
+                      <p class="text-muted text-small">
+                        {{ Illuminate\Support\Str::limit($order->description, 32) }}
+                      </p>
+                      <a class="text-small text-primary text-uppercase mb-0" href="{{ route('customer.dashboard.orders.more', ['id' => $order->id]) }}">
+                        {{ __('Details') }}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              @endforeach
+            @endif
           </div>
         </div>
       </div>

@@ -12,11 +12,9 @@
       </div>
     </div>
     <div class="col-md-12 grid-margin">
-      <h2>Settings for Your profile</h2>
+      <h2>{{ __('Settings for Your profile') }}</h2>
       <p class="mb-md-0">
-        On this page you can change the password
-        and other data for this account. Be careful
-        when filling out the form
+        {{ __('On this page you can change the password and other data for this account. Be careful when filling out the form') }}
       </p>
     </div>
 
