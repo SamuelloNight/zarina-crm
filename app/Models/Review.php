@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @method static create(array $array)
  * @method static wherePublished(bool $value)
+ * @method static whereId($id)
+ * @method static find($id)
  */
 class Review extends Model
 {

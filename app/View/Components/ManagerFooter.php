@@ -9,7 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CustomerFooter extends Component
+class ManagerFooter extends Component
 {
   public function __construct()
   {
@@ -18,6 +18,6 @@ class CustomerFooter extends Component
 
   public function render(): View|Factory|Htmlable|string|Closure|Application
   {
-    return view('components.customer-footer');
+    return view('components.manager-footer');
   }
 }

@@ -69,11 +69,11 @@ class OrdersController extends Controller
       'services' => 'required',
       'services.*' => 'required',
     ], [
-      'name.required' => 'Enter customer name',
-      'phone_number.required' => 'Enter your contact phone number',
-      'email.required' => 'Please enter a contact email address',
-      'services.required' => 'Please select at least one service',
-      'services.*.required' => 'Please select at least one service',
+      'name.required' => __('Enter customer name'),
+      'phone_number.required' => __('Enter your contact phone number'),
+      'email.required' => __('Please enter a contact email address'),
+      'services.required' => __('Please select at least one service'),
+      'services.*.required' => __('Please select at least one service'),
     ]);
 
     if ($validator->fails()) {

@@ -1,4 +1,4 @@
-@extends('layouts.customer')
+@extends('layouts.manager')
 
 @section('content')
   <div class="row">
@@ -21,11 +21,13 @@
         </p>
       </div>
       <div>
-        @if($order->status !== App\Models\Order::STATUS_DELETED_BY_CUSTOMER &&
-            $order->status !== App\Models\Order::STATUS_DELETED_BY_MANAGER)
-          <a class="btn btn-outline-danger mt-2 mt-xl-0" href="{{ route('customer.dashboard.orders.delete', ['id' => $order->id]) }}">
-            {{ __('Delete order') }}
-          </a>
+        @if(!$order->manager)
+          @if($order->status !== App\Models\Order::STATUS_DELETED_BY_CUSTOMER &&
+          $order->status !== App\Models\Order::STATUS_DELETED_BY_MANAGER)
+            <a class="btn btn-outline-primary mt-2 mt-xl-0" href="{{ route('manager.orders.accept', ['id' => $order->id]) }}">
+              {{ __('Accept order') }}
+            </a>
+          @endif
         @endif
       </div>
     </div>
@@ -65,7 +67,11 @@
             <div class="col-md-6">
               <address>
                 <p class="font-weight-bold">{{ __('Contact phone number') }}</p>
-                <p>{{ $order->phone_number }}</p>
+                @if ($order->manager && $order->manager->id === $manager->id)
+                  <p>{{ $order->phone_number }}</p>
+                @else
+                  <p>{{ substr_replace($order->phone_number, '** **', -5) }}</p>
+                @endif
               </address>
               <address>
                 <p class="font-weight-bold">{{ __('Contact email address') }}</p>
@@ -88,17 +94,50 @@
                 </ul>
               </address>
             </div>
+            @if ($order->manager->id === $manager->id)
+              <div class="col-12">
+                <form class="mb-3" action="{{ route('manager.orders.status', ['id' => $order->id]) }}">
+                  <div class="form-group my-3">
+                    <label>{{ __('Change order status') }}</label>
+                    <select class="form-control form-control-sm" name="status">
+                      @foreach(App\Models\Order::statuses() as $status)
+                        <option>{{ __($status) }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  @if ($order->status !== App\Models\Order::STATUS_DELETED_BY_MANAGER && $order->status !== App\Models\Order::STATUS_DELETED_BY_CUSTOMER)
+                    <button type="submit" class="btn btn-primary btn-sm">
+                      {{ __('Submit') }}
+                    </button>
+                  @else
+                    <button type="submit" class="btn btn-primary btn-sm" disabled>
+                      {{ __('Submit') }}
+                    </button>
+                    <span class="">{{ __('Can`t change status because it`s deleted') }}</span>
+                  @endif
+                </form>
+              </div>
+            @endif
             <div class="col-12 mt-3">
               <div class="w-100 d-flex justify-content-between align-items-end">
                 <span class="text-muted text-small" title="{{ __('Date of last action on the order') }}">
                 {{ $order->updated_at }}
                 </span>
-                @if($order->status !== App\Models\Order::STATUS_DELETED_BY_CUSTOMER &&
-                    $order->status !== App\Models\Order::STATUS_DELETED_BY_MANAGER)
+                @if(!$order->manager)
+                  @if($order->status !== App\Models\Order::STATUS_DELETED_BY_CUSTOMER &&
+                      $order->status !== App\Models\Order::STATUS_DELETED_BY_MANAGER)
+                    <a
+                      class="opacity-25 text-primary text-small text-uppercase font-weight-bold"
+                      href="{{ route('manager.orders.accept', ['id' => $order->id]) }}">
+                      {{ __('Accept order') }}
+                    </a>
+                  @endif
+                @elseif ($order->manager->id === $manager->id)
                   <a
-                    class="opacity-25 text-danger text-small text-uppercase font-weight-bold"
-                    href="{{ route('customer.dashboard.orders.delete', ['id' => $order->id]) }}">
-                    {{ __('Delete order') }}
+                    class="text-success text-small text-uppercase font-weight-bold"
+                    href="https://api.whatsapp.com/send?phone={{ $order->cleared_phone_number }}"
+                    target="_blank">
+                    {{ __('Go to whatsapp') }}
                   </a>
                 @endif
               </div>
@@ -113,12 +152,20 @@
         <div class="card-body">
           <h4 class="card-title mb-2">{{ __('Manager') }}</h4>
           <p class="card-description mb-4">{{ __('This order manager') }}</p>
-          @if(!$order->manager)
-            <p class="text-center text-muted mb-4">
-              <i>{{ __('The manager has not yet accepted your order') }}</i>
-            </p>
+          @if($order->manager)
+            <h1 class="display-4 mb-3">{{ $order->manager->full_name }}</h1>
+            <address>
+              <p class="font-weight-bold">{{ __('Contact email address') }}</p>
+              <p>{{ $order->manager->email }}</p>
+            </address>
+            <address>
+              <p class="font-weight-bold">{{ __('Contact phone number') }}</p>
+              <p>{{ $order->manager->phone_number }}</p>
+            </address>
           @else
-            {{-- TODO: render manager data --}}
+            <p class="text-center text-muted mb-4">
+              <i>{{ __('The manager has not yet accepted order') }}</i>
+            </p>
           @endif
         </div>
       </div>

@@ -49,4 +49,9 @@ class Customer extends Authenticatable
   {
     return $this->hasMany(Order::class, 'customer_id', 'id');
   }
+
+  public function getOrdersCount(string $status = null): int
+  {
+    return $status ? $this->orders()->where('status', '=', $status)->count() : $this->orders()->count();
+  }
 }

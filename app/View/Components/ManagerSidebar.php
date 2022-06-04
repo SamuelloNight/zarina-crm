@@ -9,15 +9,15 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CustomerFooter extends Component
+class ManagerSidebar extends Component
 {
   public function __construct()
   {
     //
   }
 
-  public function render(): View|Factory|Htmlable|string|Closure|Application
+  public function render(): View|Factory|Htmlable|Closure|string|Application
   {
-    return view('components.customer-footer');
+    return view('components.manager-sidebar');
   }
 }
