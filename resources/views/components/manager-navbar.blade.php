@@ -2,9 +2,9 @@
   <div class="navbar-brand-wrapper d-flex justify-content-center">
     <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
       <a class="navbar-brand brand-logo" href="{{ route('customer.dashboard.main') }}">
-        <span class="logo">{{ config('app.name') }}</span>
+        <span class="logo">{{ config('app.name') }} <span class="text-muted">Manager</span></span>
       </a>
-      <a class="navbar-brand brand-logo-mini" href="{{ route('customer.dashboard.main') }}">
+      <a class="navbar-brand brand-logo-mini" href="{{ route('manager') }}">
         <span class="logo-mini">CRM</span>
       </a>
       <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">

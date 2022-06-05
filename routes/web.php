@@ -81,7 +81,7 @@ Route::prefix('dashboard')->middleware(['customer'])->group(function () {
 Route::prefix('manager')->group(function () {
   Route::get('/', function () {
     return redirect()->route('manager.orders.fresh');
-  });
+  })->name('manager');
 
   Route::prefix('auth')->group(function () {
     Route::prefix('login')->group(function () {

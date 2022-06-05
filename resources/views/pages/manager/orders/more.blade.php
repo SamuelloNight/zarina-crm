@@ -94,7 +94,7 @@
                 </ul>
               </address>
             </div>
-            @if ($order->manager->id === $manager->id)
+            @if ($order->manager && $order->manager->id === $manager->id)
               <div class="col-12">
                 <form class="mb-3" action="{{ route('manager.orders.status', ['id' => $order->id]) }}">
                   <div class="form-group my-3">
