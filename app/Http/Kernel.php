@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\CustomerAuthenticated;
 use App\Http\Middleware\Localization;
 use App\Http\Middleware\ManagerAuthenticated;
+use App\Http\Middleware\ManagerRoot;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -70,5 +71,6 @@ class Kernel extends HttpKernel
     'localization' => Localization::class,
     'customer' => CustomerAuthenticated::class,
     'manager' => ManagerAuthenticated::class,
+    'manager_root' => ManagerRoot::class,
   ];
 }

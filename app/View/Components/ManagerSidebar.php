@@ -18,6 +18,8 @@ class ManagerSidebar extends Component
 
   public function render(): View|Factory|Htmlable|Closure|string|Application
   {
-    return view('components.manager-sidebar');
+    return view('components.manager-sidebar', [
+      'manager' => auth('manager')->user()
+    ]);
   }
 }

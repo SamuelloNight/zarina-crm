@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\Customer\SettingsController;
 use App\Http\Controllers\Web\Manager\AuthenticateController as ManagerAuthenticateController;
 use App\Http\Controllers\Web\Manager\CustomersController;
 use App\Http\Controllers\Web\Manager\MainController as ManagerMainController;
+use App\Http\Controllers\Web\Manager\ManagersController;
 use App\Http\Controllers\Web\Manager\OrdersController as ManagerOrdersController;
 use App\Http\Controllers\Web\Manager\ReviewsController as ManagerReviewsController;
 use App\Http\Controllers\Web\HomeController;
@@ -112,6 +113,14 @@ Route::prefix('manager')->group(function () {
     Route::prefix('customers')->group(function () {
       Route::get('/', [CustomersController::class, 'show'])->name('manager.customers');
       Route::get('edit/{id}', [CustomersController::class, 'showEdit'])->name('manager.customers.edit');
+    });
+
+    Route::prefix('managers')->middleware(['manager_root'])->group(function () {
+      Route::get('/', [ManagersController::class, 'show'])->name('manager.root.managers');
+      Route::get('create', [ManagersController::class, 'showCreate'])->name('manager.root.managers.create');
+      Route::post('create', [ManagersController::class, 'create']);
+      Route::get('edit/{id}', [ManagersController::class, 'showEdit'])->name('manager.root.managers.edit');
+
     });
   });
 });

@@ -19,6 +19,14 @@
         <span class="menu-title">{{ __('Customers') }}</span>
       </a>
     </li>
+
+    <li class="nav-item" style="{{ $manager->is_root ? '' : 'opacity:.5;pointer-events:none;' }}">
+      <a class="nav-link" href="{{ route('manager.root.managers') }}">
+        <i class="mdi mdi-account-multiple menu-icon"></i>
+        <span class="menu-title">{{ __('Managers') }}</span>
+      </a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" href="{{ route('manager.reviews') }}">
         <i class="mdi mdi mdi mdi-star-outline menu-icon"></i>
