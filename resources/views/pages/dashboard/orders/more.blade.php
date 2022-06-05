@@ -118,7 +118,15 @@
               <i>{{ __('The manager has not yet accepted your order') }}</i>
             </p>
           @else
-            {{-- TODO: render manager data --}}
+            <h1 class="display-4 mb-3">{{ $order->manager->full_name }}</h1>
+            <address>
+              <p class="font-weight-bold">{{ __('Contact email address') }}</p>
+              <p>{{ $order->manager->email }}</p>
+            </address>
+            <address>
+              <p class="font-weight-bold">{{ __('Contact phone number') }}</p>
+              <p>{{ $order->manager->phone_number }}</p>
+            </address>
           @endif
         </div>
       </div>
